@@ -1,0 +1,9 @@
+This project is MIT licensed; see LICENSE for the full text.
+
+Portions of this project are derived from `dsh-web-password-auth`:
+
+    https://github.com/Lstions/dsh-web-password-auth
+
+which is also MIT licensed. The derived parts are the password sign-in flow,
+the session-cookie format, scrypt password hashing, and TOTP two-factor
+support. The desktop-specific differences are documented in README.md.

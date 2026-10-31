@@ -303,5 +303,5 @@ client-modules: duplicate factory registration for "dsh-desktop-web" (bundle exe
 
 [MIT](LICENSE)。
 
-密码登录、会话 cookie、scrypt 与 TOTP 的移植来源是 [`dsh-web-password-auth`](https://github.com/Lstions/dsh-web-password-auth)（MIT）。本项目的差异与改造原因见上文「与上游插件的三个关键差异」和「按网卡绑定」。
+密码登录、会话 cookie、scrypt 与 TOTP 的移植来源是 [`dsh-web-password-auth`](https://github.com/Lstions/dsh-web-password-auth)（MIT），署名与范围见 [NOTICE](NOTICE)。本项目的差异与改造原因见上文「与上游插件的三个关键差异」和「按网卡绑定」。
 
