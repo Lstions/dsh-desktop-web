@@ -5,6 +5,10 @@
   "type": "module",
   "description": "Serve the DeepSeek Harness desktop Host to a browser on other addresses, with username/password sign-in, persistent sessions, optional TOTP two-factor and in-app bridge configuration.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lstions/dsh-desktop-web.git"
+  },
   "keywords": [
     "dsh",
     "deepseek-harness",
