@@ -1,0 +1,55 @@
+# DeepSeek Harness — desktop Web access
+#
+# One row: a bridge inside the Host process that serves this desktop
+# application's own Web GUI on additional addresses, behind username/password
+# sign-in (with optional TOTP two-factor).
+#
+# Because it forwards to the Host that owns the desktop window, a browser and
+# the window share every session, plugin, workspace and background job.
+#
+# `listen` takes one address or a list. Each entry opens its own listener, so
+# one desktop app can serve loopback, the LAN and a tailnet at the same time;
+# an address that cannot be bound is reported and skipped without disturbing
+# the others. Use a concrete interface address — a wildcard bind is refused by
+# the Host's Web carrier for the same reason.
+#
+# First run: open the loopback URL and create the account. `bootstrapLoopbackOnly`
+# means a LAN or tailnet listener cannot create it, so a stranger who reaches the
+# port first cannot become the owner.
+- insert:
+    - id: desktop-web
+      name: '@local/dsh-desktop-web'
+      config:
+        # Preferred form: name the interfaces to serve, not their addresses.
+        # The address is read from the interface at every launch, so a DHCP
+        # change, a new Wi-Fi network or a renumbered tailnet keeps working.
+        # Pick them in the app: Settings -> Security -> Bridge.
+        # (example)
+        #   bind:
+        #     - 'Wi-Fi'
+        #     - 'Tailscale'
+        bind: []
+        # Port used for every interface in `bind`.
+        port: 8091
+        # Explicit `host:port` entries, for anything an interface name cannot
+        # express (a hostname, a specific secondary address). IGNORED whenever
+        # `bind` is non-empty, so a half-finished migration cannot double-bind.
+        listen:
+          - '127.0.0.1:8091'
+        # Bridge access key. Empty generates a fresh one per launch; set a long
+        # random string to keep the bootstrap URL stable across restarts.
+        accessKey: ''
+        # Browser session lifetime in days.
+        sessionDays: 30
+        # Only a loopback listener may create the first account.
+        bootstrapLoopbackOnly: true
+        # Failed sign-ins before the source address is locked out.
+        maxAttempts: 5
+        # Lockout duration in milliseconds.
+        lockoutMs: 300000
+        # Rejected shorter passwords.
+        minPasswordLength: 8
+        # Issuer name shown in authenticator apps.
+        totpIssuer: 'DSH'
+        # Offer TOTP enrolment on the account page.
+        totpAvailable: true

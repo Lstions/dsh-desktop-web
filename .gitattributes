@@ -1,0 +1,6 @@
+# Sources are authored with LF; keep the repository LF so diffs stay clean
+# regardless of the platform a contributor checks out on.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.webp binary

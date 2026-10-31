@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Desktop Web Access",
+    "description": "Serves this desktop application's own Web UI on several addresses behind password sign-in and optional two-factor, sharing every session, plugin and workspace with the desktop window."
+  }
+}

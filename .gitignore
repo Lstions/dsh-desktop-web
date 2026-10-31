@@ -1,0 +1,14 @@
+# dependencies
+node_modules/
+
+# local scratch harnesses (throwaway tests live as _*.mjs)
+_*.mjs
+_*.test.mjs
+
+# Never commit machine-local output: keyed bootstrap URLs, logs, editor state
+*.url
+*.log
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
