@@ -65,7 +65,7 @@ import {
 } from './pages.js';
 
 /** This bundle's package name, used to find its own Loader row. */
-const PLUGIN_PACKAGE = '@local/dsh-desktop-web';
+const PLUGIN_PACKAGE = 'dsh-desktop-web';
 
 /** Credential record holding the username and password hash. */
 const PASSWORD_KEY = 'desktop-web/password';

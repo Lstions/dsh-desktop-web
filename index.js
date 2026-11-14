@@ -16,7 +16,7 @@
  * memory, and injects it upstream. The browser only ever holds this plugin's
  * own access cookie.
  *
- * @module @local/dsh-desktop-web
+ * @module dsh-desktop-web
  */
 
 import { createServer, request as httpRequest } from 'node:http';

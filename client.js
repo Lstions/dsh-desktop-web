@@ -25,7 +25,7 @@ window.__ModuleLoader__.load({
   // registers, and the Host's roster keys the same bundle by its package name.
   // A mismatch registers one bundle under two ids and fails boot with
   // "duplicate factory registration".
-  id: '@local/dsh-desktop-web',
+  id: 'dsh-desktop-web',
   factory: (require) => {
     const module = { exports: {} };
     const exports = module.exports;
@@ -1200,7 +1200,7 @@ window.__ModuleLoader__.load({
     }
 
     /** This bundle's package name. */
-    const OUR_PACKAGE = '@local/dsh-desktop-web';
+    const OUR_PACKAGE = 'dsh-desktop-web';
 
     /**
      * Whether a plugin detail page is showing this bundle.

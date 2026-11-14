@@ -1,13 +1,29 @@
 # 桌面版 Web 访问插件（含密码登录）
 
+> npm: [dsh-desktop-web](https://www.npmjs.com/package/dsh-desktop-web)（首个发布版本 `2.4.0`）
+
 在**桌面版运行中**，用浏览器从多个网段访问同一个 Host。会话、插件、工作区、后台任务全部共享——因为只有一个进程，桌面窗口和浏览器只是它的两个客户端。对外只暴露密码登录，不发送任何 DSH 凭据。
 
 ## 安装
 
+### 从 npm（推荐）
+
+```sh
+# 桌面版 Host 的 profile 里安装（本包声明 dsh.bundle.patch，安装后自动进入 dsh.profile.bundles）
+dsh plugin --profile web add dsh-desktop-web@2.4.0
+# 然后重启桌面版
+dsh --profile web
+```
+
+### 从本地源码（开发）
+
 1. 把本目录放到任意位置（不需要构建，源码即产物）。
 2. 用 DSH 的插件管理安装这个目录（`install_bundle` 指向该目录），或在 profile 的 `package.json` 里 `link:` 它并加入 `dsh.profile.bundles`。
 3. 重启桌面版，让 Client 半进入模块清单。
-4. 打开 **`http://127.0.0.1:8091/`** → 创建账户 → 之后各网段都用同一套账号密码登录。
+
+### 首次使用
+
+打开 **`http://127.0.0.1:8091/`** → 创建账户 → 之后各网段都用同一套账号密码登录。
 
 首次启动会监听 loopback。要对外提供服务，去 **设置 → 安全 → 桥接** 勾选网卡（见下文「按网卡绑定」）。
 
@@ -15,7 +31,7 @@
 
 ```yaml
 - id: desktop-web
-  name: '@local/dsh-desktop-web'
+  name: 'dsh-desktop-web'
   config:
     bind: ['Wi-Fi', 'Tailscale']   # 网卡名，IP 变了也不失效
     port: 8091
@@ -261,17 +277,17 @@ connection.admit(request)              // 签名凭据 → peer
 
 ## 坑：bundle id 必须等于包名（否则启动崩溃）
 
-`client.js` 里 `window.__ModuleLoader__.load({ id, factory })` 的 `id` **必须与 `package.json` 的 `name` 完全一致**。
+`client.js` 里 `window.__ModuleLoader__.load({ id, factory })` 的 `id` **必须与 `package.json` 的 `name` 完全一致**（当前都是 `dsh-desktop-web`）。
 
 加载器按 bundle 声明的 `id` 建 factory 表，而宿主的 roster 按**包名**索引同一个 bundle。两者不一致会让同一个 bundle 注册两次，桌面版启动直接失败：
 
 ```
 web boot: 1 entry did not activate
-@local/dsh-desktop-web: import failed
+dsh-desktop-web: import failed
 client-modules: duplicate factory registration for "dsh-desktop-web" (bundle executed twice without invalidate?)
 ```
 
-对照：官方模板写 `id: '@local/my-decoration'`（含 scope 的完整包名），upstream 写 `id: 'dsh-web-password-auth'`（它的包名正是这个）。本插件早期误写成短名 `dsh-desktop-web` 而包名是 `@local/dsh-desktop-web`，于是崩了。
+历史：本插件早期包名是 `@local/dsh-desktop-web`，`client.js` 里却写成短名 `dsh-desktop-web`，于是崩了。现在包名统一为 `dsh-desktop-web`。改包名时务必同步：`client.js` 的 bundle `id`、`client.js` 的 `OUR_PACKAGE`、`gate.js` 的 `PLUGIN_PACKAGE`、`cordis.patch.yml` 的行 `name`。
 
 **注意**：崩溃恢复会把 profile 的 `bundles` 列表砍到只剩基础几项（本机从 13 项变成 3 项），`node_modules` 里的包仍在，需要手工把列表补回去。
 

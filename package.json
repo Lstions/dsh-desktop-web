@@ -1,7 +1,6 @@
 {
-  "name": "@local/dsh-desktop-web",
-  "version": "2.3.0",
-  "private": true,
+  "name": "dsh-desktop-web",
+  "version": "2.4.0",
   "type": "module",
   "description": "Serve the DeepSeek Harness desktop Host to a browser on other addresses, with username/password sign-in, persistent sessions, optional TOTP two-factor and in-app bridge configuration.",
   "license": "MIT",
@@ -51,5 +50,21 @@
         "@deepseek-ai/dsh-client-ui-settings"
       ]
     }
+  },
+  "engines": {
+    "node": ">=20",
+    "dsh": ">=0.2.1 <0.3.0-0"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.2"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/cordis": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "tag": "latest"
   }
 }
